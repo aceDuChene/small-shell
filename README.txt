@@ -1,4 +1,4 @@
-To compile, type into the terminal
+To compile, type into the linux terminal
 gcc -g -Wall -std=gnu99 main.c -o smallsh
 
 then to run, type in the terminal
