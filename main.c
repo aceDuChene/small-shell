@@ -3,19 +3,19 @@
  *
  * @author      : Danielle DuChene
  * @createdOn   : 2/5/2021
+ * @editedOn    : 3/17/2022
  * @description : This is smallsh, an assignment done for CS344
  *   Operating Systems I for Oregon State University Ecampus.
  *   A shell that implements a subset of features of well-known
  *   shells. As listed on the assignment description, it will
  *      1. Provide a prompt for running commands
  *      2. Handle blank lines and comments (beginning with #)
- *      3. Provide expansion for the variable $$
- *      4. Execute exit, cd, and status via code built into shell
- *      5. Execute other commands by creating new processes using
+ *      3. Execute exit, cd, and status via code built into shell
+ *      4. Execute other commands by creating new processes using
  *          a function from the exec family of functions.
- *      6. Support input and output redirection
- *      7. Can run foreground commands & background processes
- *      8. Implement custom handlers for 2 signals SIGINT & SIGTSTP
+ *      5. Support input and output redirection
+ *      6. Can run foreground commands & background processes
+ *      7. Implement custom handlers for 2 signals SIGINT & SIGTSTP
  *============================================================**/
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -174,47 +174,6 @@ void otherCommand(struct commandInfo inCommand)
                 exit(2);
             }
         }
-
-        // if user doesn't redirect standard input and its in the bg, std in
-        // and out should be "/dev/null"
-        // I COULDn"T FIGURE THIS OUT so I gave up
-        //  if(inCommand.bgProcess){
-        //      if(!inCommand.inputFile){
-        //          int nullFile = open("dev/null", O_RDONLY);
-        //          if(nullFile == -1){
-        //              perror("open null file\n");
-        //              fflush(stdout);
-        //              latestStatus = 1;
-        //              exit(1);
-        //          }
-
-        //         int result = dup2(nullFile, 0);
-        //         if (result == -1) {
-        //             perror("source dup2() in null\n");
-        //             fflush(stdout);
-        //             latestStatus = 2;
-        //             exit(2);
-        //         }
-        //     }
-
-        //     if(!inCommand.outputFile){
-        //         int nullFile = open("dev/null", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-        //         if(nullFile == -1){
-        //             perror("open null file\n");
-        //             fflush(stdout);
-        //             latestStatus = 1;
-        //             exit(1);
-        //         }
-
-        //         int result = dup2(nullFile, 1);
-        //         if (result == -1) {
-        //             perror("source dup2() out null\n");
-        //             fflush(stdout);
-        //             latestStatus = 2;
-        //             exit(2);
-        //         }
-        //     }
-        // }
 
         execvp(inCommand.command, inCommand.args);
         // exec only returns if there is an error
