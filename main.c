@@ -432,7 +432,7 @@ void nextLine(int inpid)
 
         else if ((!strcmp(newCommand.command, "status")))
         {
-            printf("terminated by signal %d\n", latestStatus);
+            printf("exit value %d\n", latestStatus);
             fflush(stdout);
         }
 
