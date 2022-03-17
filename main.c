@@ -74,59 +74,6 @@ void catchSIGTSTP(int signo)
     }
 }
 
-// varExpanion:
-// if the variable has two $$ in a row, write a new
-// string replacing the $$ with the pid
-char *varExpansion(char *inVar, int inPID)
-{
-    int length = strlen(inVar) + 1;
-    int replacePoints[1024];
-    int pointCounter = 0;
-    char newVar[2048] = "";
-    char pidBuf[24] = "";
-    snprintf(pidBuf, 64, "%d", inPID);
-    int dollarSign = 0;
-
-    for (int i = 0; i < length; i++)
-    {
-        if (inVar[i] == '$' && inVar[i + 1] == '$')
-        {
-            replacePoints[pointCounter] = i;
-            // increase spot in point array
-            pointCounter++;
-            // advance i so we don't double count i + 1
-            i++;
-            dollarSign = 1;
-        }
-    }
-
-    if (dollarSign)
-    {
-        pointCounter = 0;
-        for (int i = 0; i < length; i++)
-        {
-            if (i == replacePoints[pointCounter])
-            {
-                strcat(newVar, pidBuf);
-                pointCounter++;
-                // dont double count i
-                i++;
-            }
-            else
-            {
-                char toAdd = inVar[i];
-                strncat(newVar, &toAdd, 1);
-            }
-        }
-        return newVar;
-    }
-
-    else
-    {
-        return inVar;
-    }
-}
-
 // cdCommand:
 // will direct to HOME if there is no argument
 // provided. Or else it will direct to the argument.
@@ -408,7 +355,6 @@ void nextLine(int inpid)
                 {
                     // add to arguments
                     fflush(stdout);
-                    token = varExpansion(token, inpid);
                     newCommand.args[argCount] = token;
                     argCount++;
                 }
