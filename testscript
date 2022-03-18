@@ -1,0 +1,92 @@
+#!/bin/bash
+
+echo "PRE-SCRIPT INFO"
+echo "  Grading Script PID: $$"
+echo "  Adapted from the OSU grading script"
+
+./smallsh <<'___EOF___'
+echo BEGINNING TEST SCRIPT
+echo
+echo --------------------
+echo Using comment (only next colon prompt is displayed next)
+#THIS COMMENT SHOULD DO NOTHING
+echo
+echo
+echo --------------------
+echo ls (return dir contents)
+ls
+echo
+echo
+echo --------------------
+echo ls out junk
+ls > junk
+echo
+echo
+echo --------------------
+echo cat junk (return contents of junk)
+cat junk
+echo
+echo
+echo --------------------
+echo test -f badfile (return error value of 1, note extraneous &)
+test -f badfile
+status &
+echo
+echo
+echo --------------------
+echo wc in badfile (return error)
+wc < badfile
+echo
+echo
+echo --------------------
+echo badfile (return text error)
+badfile
+echo
+echo
+echo --------------------
+echo sleep 100 background (return process ID of sleeper)
+sleep 100 &
+echo
+echo
+echo --------------------
+echo pkill -signal SIGTERM sleep (pid of killed process, and signal)
+pkill sleep
+echo
+echo
+echo --------------------
+echo sleep 1 background (pid of bg ps when done, and exit value)
+sleep 1 &
+sleep 1
+echo
+echo
+echo --------------------
+echo pwd
+pwd
+echo
+echo
+echo --------------------
+echo mkdir testdir
+mkdir testdir
+echo
+echo
+echo --------------------
+echo cd testdir
+cd testdir
+echo
+echo
+echo --------------------
+echo pwd (in the newly created dir)
+pwd
+echo --------------------
+echo cd
+cd
+echo
+echo
+echo --------------------
+echo pwd (in the HOME dir)
+pwd
+echo
+echo
+echo --------------------
+exit
+___EOF___
